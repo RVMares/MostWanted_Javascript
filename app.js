@@ -140,6 +140,15 @@ function displayPeople(people) {
 function displayPerson(person) {
     let personInfo = `First Name: ${person.firstName}\n`;
     personInfo += `Last Name: ${person.lastName}\n`;
+    personInfo += `Gender: ${person.gender}\n`;
+    personInfo += `DOB: ${person.dob}\n`;
+    personInfo += `Height: ${person.height}\n`;
+    personInfo += `Weight: ${person.weight}\n`;
+    personInfo += `Eye Color: ${person.eyeColor}\n`;
+    personInfo += `Occupation: ${person.occupation}\n`;
+    personInfo += `Parents: ${person.parents}\n`;
+    personInfo += `Current Spouse: ${person.currentSpouse}\n`;
+
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
     alert(personInfo);
 }
@@ -185,9 +194,24 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+
+
+
+
+
+
+
+
+
+
+
+
+function findById (personObj, peopleArr, personPropStr){
+    return peopleArr.filter(function(item){return (personObj === item.id)})
+}
 function searchByTraits(people) {
     let traitSearch = promptFor (
-        "Would you like to search by one or multiple traits? Enter 'one' or 'multiple'"
+        "Would you like to search by one or multiple traits? \nEnter 'one' or 'multiple'"
         ).toLowerCase();
     switch(traitSearch) {
         case "one":
@@ -200,27 +224,53 @@ function searchByTraits(people) {
             app(people);
             break;
     }
-    let displayTraits = promptFor (
-        "What trait would you like to search for?", chars);
-
+}
+function traitFilter(people) {
     switch (displayTraits) {
         case "gender":
             let findByGender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars); 
-            let foundByTrait = people.filter(person.gender === findByGender);
-            return foundByTrait;
+            let foundByGender = people.filter(person.gender === findByGender);
+            return foundByGender;
             break;
         case "height":
+            let findByHeight = promptFor("What is the height? \nEnter number only.")
+            let foundByHeight = people.filter(person.height === findByHeight);
+            return foundByHeight;
             break;
         case "weight":
+            let findByWeight = promptFor("What is the weight? \nEnter number only.")
+            let foundByWeight = people.filter(person.weight === findByWeight);
+            return foundByWeight;
             break;
         case "eyeColor":
+            let findByEyeColor = promptFor("What is the eye color?", chars).toLowerCase();
+            let foundByEyeColor = people.filter(person.eyeColor === findByEyeColor);
+            return foundByEyeColor;
             break;
         case "occupation":
+            let findByOccupation = promptFor("What is the occupation?", chars).toLowerCase();
+            let foundByOccupation = people.filter(person.occupation === findByOccupation);
+            return foundByOccupation;
             break;
         default:
             app(people);
             break;
     }
+}
+
+const traits = ['gender', 'height', 'weight', 'eyeColor', 'occupation']
+const traitCategories = traits.filter(trait => trait.match(traitFilter))
+
+function singleTraitSearch(people) {
+    let displayTraits = promptFor (
+        "What trait would you like to search for?\nEnter 'gender', 'height', 'weight', 'eyeColor', or 'occupation'.", chars);
+    traitFilter(traitCategories)
+}
+
+
+function multipleTraitSearch() {
+    
+
 }
 
 
