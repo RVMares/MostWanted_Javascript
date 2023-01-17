@@ -184,3 +184,53 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+
+function searchByTraits(people) {
+    let traitSearch = promptFor (
+        "Would you like to search by one or multiple traits? Enter 'one' or 'multiple'"
+        ).toLowerCase();
+    switch(traitSearch) {
+        case "one":
+            searchResults = singleTraitSearch(people);
+            break;
+        case "multiple":
+            searchResults = multipleTraitSearch(people)    
+            break;
+        default:
+            app(people);
+            break;
+    }
+    let displayTraits = promptFor (
+        "What trait would you like to search for?", chars);
+
+    switch (displayTraits) {
+        case "gender":
+            let findByGender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars); 
+            let foundByTrait = people.filter(person.gender === findByGender);
+            return foundByTrait;
+            break;
+        case "height":
+            break;
+        case "weight":
+            break;
+        case "eyeColor":
+            break;
+        case "occupation":
+            break;
+        default:
+            app(people);
+            break;
+    }
+}
+
+
+// "gender"
+// "dob"
+// "height"
+// "weight"
+// "eyeColor"
+// "occupation"
+// case "family":
+//     let personFamily = findPersonFamily(person[0], people);
+//     alert(personFamily);
+//     break;
