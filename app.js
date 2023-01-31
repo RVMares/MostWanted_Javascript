@@ -194,84 +194,107 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+function findPersonFamily(personObj, peopleArr){
+    //find person by id (spouse)
+    let spouse = findById(personObj, peopleArr, "currentSpouse");
 
+    //find people by id (parents)
+    let parents = findParents(personObj, peopleArr);
 
-
-
-
-
-
-
-
-
-
-
-function findById (personObj, peopleArr, personPropStr){
-    return peopleArr.filter(function(item){return (personObj === item.id)})
-}
-function searchByTraits(people) {
-    let traitSearch = promptFor (
-        "Would you like to search by one or multiple traits? \nEnter 'one' or 'multiple'"
-        ).toLowerCase();
-    switch(traitSearch) {
-        case "one":
-            searchResults = singleTraitSearch(people);
-            break;
-        case "multiple":
-            searchResults = multipleTraitSearch(people)    
-            break;
-        default:
-            app(people);
-            break;
-    }
-}
-function traitFilter(people) {
-    switch (displayTraits) {
-        case "gender":
-            let findByGender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars); 
-            let foundByGender = people.filter(person.gender === findByGender);
-            return foundByGender;
-            break;
-        case "height":
-            let findByHeight = promptFor("What is the height? \nEnter number only.")
-            let foundByHeight = people.filter(person.height === findByHeight);
-            return foundByHeight;
-            break;
-        case "weight":
-            let findByWeight = promptFor("What is the weight? \nEnter number only.")
-            let foundByWeight = people.filter(person.weight === findByWeight);
-            return foundByWeight;
-            break;
-        case "eyeColor":
-            let findByEyeColor = promptFor("What is the eye color?", chars).toLowerCase();
-            let foundByEyeColor = people.filter(person.eyeColor === findByEyeColor);
-            return foundByEyeColor;
-            break;
-        case "occupation":
-            let findByOccupation = promptFor("What is the occupation?", chars).toLowerCase();
-            let foundByOccupation = people.filter(person.occupation === findByOccupation);
-            return foundByOccupation;
-            break;
-        default:
-            app(people);
-            break;
-    }
+    //find people based on parents (siblings)
+    let siblings = findSiblings(personObj, peopleArr);
+    //return collection
+    return spouse.concat(parents).concat(siblings)
 }
 
-const traits = ['gender', 'height', 'weight', 'eyeColor', 'occupation']
-const traitCategories = traits.filter(trait => trait.match(traitFilter))
+function findById(personObj, peopleArr, personPropStr){
+    return peopleArr.filter(function(person){return (personObj[personPropStr] === person.id)});
+}
 
-function singleTraitSearch(people) {
-    let displayTraits = promptFor (
-        "What trait would you like to search for?\nEnter 'gender', 'height', 'weight', 'eyeColor', or 'occupation'.", chars);
-    traitFilter(traitCategories)
+function findParents(personObj, peopleArr){
+    return peopleArr.filter(function(person){
+        return personObj.parents.includes(person.id)
+    });
+}
+
+function findSiblings(personObj, peopleArr){
+    return peopleArr.filter(function(person){
+        return personObj.parents.includes(person.parents[0]) || personObj.includes(item.parents[1])
+    });
 }
 
 
-function multipleTraitSearch() {
+
+
+
+
+
+
+
+
+// function searchByTraits(people) {
+//     let traitSearch = promptFor (
+//         "Would you like to search by one or multiple traits? \nEnter 'one' or 'multiple'"
+//         ).toLowerCase();
+//     switch(traitSearch) {
+//         case "one":
+//             searchResults = singleTraitSearch(people);
+//             break;
+//         case "multiple":
+//             searchResults = multipleTraitSearch(people)    
+//             break;
+//         default:
+//             app(people);
+//             break;
+//     }
+// }
+// function traitFilter(people) {
+//     switch (displayTraits) {
+//         case "gender":
+//             let findByGender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars); 
+//             let foundByGender = people.filter(person.gender === findByGender);
+//             return foundByGender;
+//             break;
+//         case "height":
+//             let findByHeight = promptFor("What is the height? \nEnter number only.")
+//             let foundByHeight = people.filter(person.height === findByHeight);
+//             return foundByHeight;
+//             break;
+//         case "weight":
+//             let findByWeight = promptFor("What is the weight? \nEnter number only.")
+//             let foundByWeight = people.filter(person.weight === findByWeight);
+//             return foundByWeight;
+//             break;
+//         case "eyeColor":
+//             let findByEyeColor = promptFor("What is the eye color?", chars).toLowerCase();
+//             let foundByEyeColor = people.filter(person.eyeColor === findByEyeColor);
+//             return foundByEyeColor;
+//             break;
+//         case "occupation":
+//             let findByOccupation = promptFor("What is the occupation?", chars).toLowerCase();
+//             let foundByOccupation = people.filter(person.occupation === findByOccupation);
+//             return foundByOccupation;
+//             break;
+//         default:
+//             app(people);
+//             break;
+//     }
+// }
+
+// const traits = ['gender', 'height', 'weight', 'eyeColor', 'occupation']
+// const traitCategories = traits.filter(trait => trait.match(traitFilter))
+
+// function singleTraitSearch(people) {
+//     let displayTraits = promptFor (
+//         "What trait would you like to search for?\nEnter 'gender', 'height', 'weight', 'eyeColor', or 'occupation'.", chars);
+//     traitFilter(traitCategories)
+// }
+
+
+// function multipleTraitSearch() {
     
 
-}
+// }
 
 
 // "gender"
