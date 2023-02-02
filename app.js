@@ -204,11 +204,15 @@ function findPersonFamily(personObj, peopleArr){
     //find people based on parents (siblings)
     let siblings = findSiblings(personObj, peopleArr);
     //return collection
-    return spouse.concat(parents).concat(siblings)
+    
+    let family = spouse.concat(parents).concat(siblings)
+    displayPeople(family);
+
 }
 
 function findById(personObj, peopleArr, personPropStr){
-    return peopleArr.filter(function(person){return (personObj[personPropStr] === person.id)});
+    return peopleArr.filter(function(person){return (personObj[personPropStr] === person.id)
+    });
 }
 
 function findParents(personObj, peopleArr){
@@ -219,12 +223,35 @@ function findParents(personObj, peopleArr){
 
 function findSiblings(personObj, peopleArr){
     return peopleArr.filter(function(person){
-        return personObj.parents.includes(person.parents[0]) || personObj.includes(item.parents[1])
+        return personObj.parents.includes(person.parents[0]) || personObj.parents.includes(person.parents[1])
     });
 }
 
+// function displayPersonFamily(peopleArr){
+//     let personFamilyInfo = peopleArr.map(function(person){
+//         return `${person.firstName} ${person.lastName}`;
+//     })
+//     .join("\n")
+//     alert (personFamilyInfo)
+// }
 
 
+
+// function displayPersonFamily(peopleArr) {
+//     alert(
+//         peopleArr.map(function (person){
+//             return`${person.firstName} ${person.lastName}`;
+//        })
+//        .join("\n")
+//   );
+// }
+
+
+//let displayPersonFamily = peopleArr.map(
+//    function displayFamilyInfo(person){
+//        return`This person's family includes ${person.firstName, person.lastName}`
+//    }
+//)
 
 
 
