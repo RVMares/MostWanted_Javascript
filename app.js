@@ -196,13 +196,16 @@ function chars(input) {
 
 function findPersonFamily(personObj, peopleArr){
     //find person by id (spouse)
-    let spouse = findById(personObj, peopleArr, "currentSpouse");
+    let spouse = findById(personObj, peopleArr, "currentSpouse"){
+        if (!)
+    };
 
     //find people by id (parents)
     let parents = findParents(personObj, peopleArr);
 
     //find people based on parents (siblings)
-    let siblings = findSiblings(personObj, peopleArr);
+    let siblings = findSiblings(personObj, peopleArr)
+    
     //return collection
     
     let family = spouse.concat(parents).concat(siblings)
@@ -227,31 +230,8 @@ function findSiblings(personObj, peopleArr){
     });
 }
 
-// function displayPersonFamily(peopleArr){
-//     let personFamilyInfo = peopleArr.map(function(person){
-//         return `${person.firstName} ${person.lastName}`;
-//     })
-//     .join("\n")
-//     alert (personFamilyInfo)
-// }
 
 
-
-// function displayPersonFamily(peopleArr) {
-//     alert(
-//         peopleArr.map(function (person){
-//             return`${person.firstName} ${person.lastName}`;
-//        })
-//        .join("\n")
-//   );
-// }
-
-
-//let displayPersonFamily = peopleArr.map(
-//    function displayFamilyInfo(person){
-//        return`This person's family includes ${person.firstName, person.lastName}`
-//    }
-//)
 
 
 
