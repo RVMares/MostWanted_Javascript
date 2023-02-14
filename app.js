@@ -210,8 +210,6 @@ function findPersonFamily(personObj, peopleArr){
     
 }
 
-
-
 function findById(personObj, peopleArr, personPropStr){
     return peopleArr.filter(function(person)
         {return (personObj[personPropStr] === person.id)
@@ -258,6 +256,43 @@ function findSiblings(personObj, peopleArr){
             })
     }
 }
+
+function findPersonDescendants(personObj, peopleArr){
+    //find children based on shared parent
+    let children = findChildren(personObj, peopleArr);
+
+    //find grandchildren
+    let grandchildren = findGrandchildren(personObj, peopleArr);
+
+    let descendants = children.concat(grandchildren);
+    return descendants
+}
+
+function findChildren(personObj, peopleArr){
+    let foundChildren = {};
+    if (!foundChildren[0]) {
+        return "This person does not have children.\n";
+    } else {
+        return foundChildren
+            .map(function(personObj){
+                return `Child: ${personObj.firstName} ${personObj.lastName}\n`;
+            })
+    }
+}
+
+function findGrandchildren(personObj, peopleArr){
+    let foundGrandchildren = {};
+    if (!foundGrandchildren[0]) {
+        return "This person does not have grandchildren.\n";
+    } else {
+        return foundGrandchildren
+            .map(function(personObj){
+                return `Grandchild: ${personObj.firstName} ${personObj.lastName}\n`;
+            })
+    }
+}
+
+
 
 
 
