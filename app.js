@@ -196,7 +196,7 @@ function chars(input) {
 
 function findPersonFamily(personObj, peopleArr){
     //find person by id (spouse)
-    let spouse = findSpouse(personObj, peopleArr);
+    let spouse = findSpouse(personObj, peopleArr);        
 
     //find people by id (parents)
     let parents = findParents(personObj, peopleArr);
@@ -206,54 +206,55 @@ function findPersonFamily(personObj, peopleArr){
     
     //return collection
     let family = spouse.concat(parents).concat(siblings);
-    displayPeople(family);
+    return family;
     
 }
 
 
 
 function findById(personObj, peopleArr, personPropStr){
-    return peopleArr.filter(function(person){return (personObj[personPropStr] === person.id)
+    return peopleArr.filter(function(person)
+        {return (personObj[personPropStr] === person.id)
     });
 }
 
 function findSpouse(personObj, peopleArr){
-    let currentSpouse = findById(personObj, peopleArr, "currentSpouse")
-    if(!currentSpouse[0]){
-        return "This person is not married.";
+    let currentSpouse = findById(personObj, peopleArr, "currentSpouse");
+    
+    if (!currentSpouse[0]){
+        return "This person is not married.\n";
     } else {
-        peopleArr
-            .map(function(currentSpouse) {
-                return `Spouse: ${currentSpouse.firstName} ${currentSpouse.lastName}`;
-            })
+        return currentSpouse
+        .map(function(personObj) {
+            return `Spouse: ${personObj.firstName} ${personObj.lastName}\n`;
+        })
     }
 }
 
 function findParents(personObj, peopleArr){
     let foundParents = peopleArr.filter(function(person){
-        return personObj.parents.includes(person.id)
+        return (personObj.parents.includes(person.id))
     });
-    if (!foundParents[0]||!foundParents[1]) {
-        return "This person's parents are not in the database.";
+    if ((!foundParents[0]) && (!foundParents[1])) {
+        return "This person's parents are not in the database.\n";
     } else {
-        peopleArr
-            .map(function(foundParents) {
-                return `Parents: ${foundParents}`;    
+        return foundParents
+            .map(function(personObj) {
+                return `Parent: ${personObj.firstName} ${personObj.lastName}\n`;   
             })
     }
 }
 
-
 function findSiblings(personObj, peopleArr){
     let foundSiblings = peopleArr.filter(function(person){
-        return personObj.parents.includes(person.parents[0]) || personObj.parents.includes(person.parents[1])
+        return (personObj.parents.includes(person.parents[0]) || personObj.parents.includes(person.parents[1]))
     });
     if (!foundSiblings[0]) {
-        return "This person does not have siblings.";
+        return "This person does not have siblings.\n";
     } else {
-        peopleArr
-            .map(function(foundSiblings){
-                return `Siblings: ${siblings}`;
+        return foundSiblings
+            .map(function(personObj){
+                return `Sibling: ${personObj.firstName} ${personObj.lastName}\n`;
             })
     }
 }
