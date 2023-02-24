@@ -301,21 +301,21 @@ function findChildren(personObj, peopleArr){
 
 
 
-function searchByTraits(personObj, peopleArr) {
+function searchByTraits(peopleArr) {
     let traitSearch = promptFor (
         "Would you like to search by one or multiple traits? \nEnter 'one' or 'multiple'", chars
         ).toLowerCase();
     switch(traitSearch) {
         case "one":
-            let singleTraitSearchResults = singleTraitSearch(personObj, peopleArr);
+            let singleTraitSearchResults = singleTraitSearch(peopleArr);
             alert(singleTraitSearchResults)
             break;
         case "multiple":
-            let multTraitSearchResults = multipleTraitSearch(personObj, peopleArr, personPropStr)    
+            let multTraitSearchResults = multipleTraitSearch(peopleArr)    
             alert(multTraitSearchResults)
             break;
         default:
-            searchByTraits(personObj, peopleArr);
+            searchByTraits(peopleArr);
             break;
     }
 }
@@ -342,11 +342,12 @@ function searchByTraits(personObj, peopleArr) {
 // }
 
 
-function singleTraitSearch(personObj, peopleArr) {
+function singleTraitSearch(peopleArr) {
     let chooseTrait = promptFor (
         "What trait would you like to search for?\nEnter 'gender', 'eyeColor', or 'occupation'.", chars);
     switch (chooseTrait) {
         case "gender":
+            console.log(peopleArr)
             let gender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars).toLowerCase(); 
             let findByGender = peopleArr.filter(function(person) {
                 if (person.gender === gender) {
@@ -354,8 +355,8 @@ function singleTraitSearch(personObj, peopleArr) {
                 }
             });
             return findByGender
-                .map(function(personObj) {
-                    return `${personObj.gender}: ${personObj.firstName} ${personObj.lastName}\n`;
+                .map(function(person) {
+                    return `${person.gender}: ${person.firstName} ${person.lastName}\n`;
             })
 
         case "eyeColor":
@@ -381,7 +382,7 @@ function singleTraitSearch(personObj, peopleArr) {
             })
 
         default:
-            return singleTraitSearch(personObj, peopleArr);
+            return singleTraitSearch(peopleArr);
     }
 }
 
