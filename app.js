@@ -305,11 +305,11 @@ function searchByTraits(peopleArr) {
     switch(traitSearch) {
         case "one":
             let singleTraitSearchResult = singleTraitSearch(peopleArr);
-            alert(singleTraitSearchResult)
+            alert(singleTraitSearchResult);
             break;
         case "multiple":
-            let multiTraitSearchResults = multipleTraitSearch(peopleArr)    
-            alert(multiTraitSearchResults)
+            let multiTraitSearchResults = multipleTraitSearch(peopleArr);
+            alert(multiTraitSearchResults);
             break;
         default:
             searchByTraits(peopleArr);
@@ -382,6 +382,7 @@ function findByOccupation(peopleArr){
 
 function multipleTraitSearch(peopleArr){
     let foundPeople = findByMultiTraits(peopleArr);
+    return foundPeople
 }
 function chooseTrait(){
     let chosenTraits = prompt(
@@ -390,49 +391,73 @@ function chooseTrait(){
     return traitSelection;
 }
 
-function traitFilter(){
+function findByMultiTraits(peopleArr){
     let filteredTrait = chooseTrait()
-    if (filteredTrait.includes('gender')){
+    if (filteredTrait.includes("gender" && "eyecolor" && "occupation")){
         let genderFilter = prompt("What is the gender?").toLowerCase();
-        return genderFilter;
-    }
-    if (filteredTrait.includes("eyecolor")){
         let eyeColorFilter = prompt("What is the eyeColor?").toLowerCase();
-        return eyeColorFilter;
-    }
-    if (filteredTrait.includes("occupation")){
         let occupationFilter = prompt("What is the occupation?").toLowerCase();
-        return occupationFilter;
-    }
-}
+        let foundPeople = peopleArr.filter(function(person) {
+            return (person.gender === genderFilter && person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
+        })
+        if (!foundPeople[0]) {
+            return "No person found with those traits.";
+        } else {
+            return foundPeople
+                .map(function(person){
+                    return `Gender: ${person.gender}\nEyeColor: ${person.eyeColor}\nOccupation: ${person.occupation}\n${person.firstName} ${person.lastName}\n`;
+                })
+        }
+    } else if (filteredTrait.includes("eyecolor" && "occupation")){
+        let eyeColorFilter = prompt("What is the eyeColor?").toLowerCase();
+        let occupationFilter = prompt("What is the occupation?").toLowerCase();
+        let foundPeople = peopleArr.filter(function(person) {
+            return (person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
+        })
+        if (!foundPeople[0]) {
+            return "No person found with those traits.";
+        } else {
+            return foundPeople
+                .map(function(person){
+                    return `EyeColor: ${person.eyeColor}\nOccupation: ${person.occupation}\n${person.firstName} ${person.lastName}\n`;
+                })
+        }
 
+    } else if (filteredTrait.includes("gender" && "occupation")){
+        let genderFilter = prompt("What is the gender?").toLowerCase();
+        let occupationFilter = prompt("What is the occupation?").toLowerCase();
+        let foundPeople = peopleArr.filter(function(person) {
+            return (person.gender === genderFilter && person.occupation === occupationFilter);
+        })
+        if (!foundPeople[0]) {
+            return "No person found with those traits.";
+        } else {
+            return foundPeople
+                .map(function(person){
+                    return `Gender: ${person.gender}\nOccupation: ${person.occupation}\n${person.firstName} ${person.lastName}\n`;
+                })
+        }
 
-function findByMultiTraits (peopleArr) {
-    let findByTraits = traitFilter()
-    
-    if (findByTraits === 'gender' && findByTraits === 'eyecolor'){
-        let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.eyeColor === eyeColorFilter);
-        return foundByGender.concat(foundByEyeColor);
-
-    } else if (findByTraits === 'gender' && findByTraits === 'occupation'){
-        let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.occupation === occupationFilter);
-        return foundByGender.concat(foundByOccupation);
-
-    } else if (findByTraits === 'eyecolor' && findByTraits === 'occupation'){
-        let foundPeople = peopleArr.filter((person) => person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
-        return foundByEyeColor.concat(foundByOccupation);
-
-    } else if (findByTraits === 'gender' && findByTraits === 'eyecolor' && findByTraits === 'occupation'){
-        let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
-        return foundByGender.concat(foundByEyeColor).concat(foundByOccupation);
+    } else if (filteredTrait.includes("gender" && "eyecolor")){
+        let genderFilter = prompt("What is the gender?").toLowerCase();
+        let eyeColorFilter = prompt("What is the eyeColor?").toLowerCase();
+        let foundPeople = peopleArr.filter(function(person) {
+            return (person.gender === genderFilter && person.eyeColor === eyeColorFilter)
+        });
+        if (!foundPeople[0]) {
+            return "No person found with those traits."
+        } else {
+            return foundPeople
+                .map(function(person){
+                    return `Gender: ${person.gender}\nEyeColor: ${person.eyeColor}\n${person.firstName} ${person.lastName}\n`;
+                })
+        }
 
     } else {
         alert("Please try again!");
-        return findByMultTraits(peopleArr);
+        return findByMultiTraits(peopleArr);
     }
 }
-
-
 
 
 
