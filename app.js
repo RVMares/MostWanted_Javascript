@@ -298,21 +298,18 @@ function findChildren(personObj, peopleArr){
 // }
 
 
-
-
-
 function searchByTraits(peopleArr) {
     let traitSearch = promptFor (
         "Would you like to search by one or multiple traits? \nEnter 'one' or 'multiple'", chars
         ).toLowerCase();
     switch(traitSearch) {
         case "one":
-            let singleTraitSearchResults = singleTraitSearch(peopleArr);
-            alert(singleTraitSearchResults)
+            let singleTraitSearchResult = singleTraitSearch(peopleArr);
+            alert(singleTraitSearchResult)
             break;
         case "multiple":
-            let multTraitSearchResults = multipleTraitSearch(peopleArr)    
-            alert(multTraitSearchResults)
+            let multiTraitSearchResults = multipleTraitSearch(peopleArr)    
+            alert(multiTraitSearchResults)
             break;
         default:
             searchByTraits(peopleArr);
@@ -320,89 +317,197 @@ function searchByTraits(peopleArr) {
     }
 }
 
-// function singleTraitSearch(peopleArr, personPropStr) {
-//     let desiredTrait = chooseSingleTrait(personPropStr)
-//     //traitFilter, find people with single selcted trait
-//     let foundByTrait = peopleArr.filter(function(people){
-//         return(peopleArr[personPropStr].includes(desiredTrait));
-//     })
-//     //personObj.filter(function(people){
-//     //    return(peopleArr[personPropStr].includes(desiredTrait))
-    
-//     //return collection
-//     if (!foundByTrait[0]){
-//         alert ("Try Again");
-//         return singleTraitSearch(personObj, peopleArr);
-//     }else{
-//         return foundByTrait
-//         .map(function(personObj) {
-//             return `${personObj.desiredTrait}, ${personObj.firstName}, ${personObj.lastName}`
-//         })
-//     }
-// }
-
 
 function singleTraitSearch(peopleArr) {
     let chooseTrait = promptFor (
-        "What trait would you like to search for?\nEnter 'gender', 'eyeColor', or 'occupation'.", chars);
-    switch (chooseTrait) {
-        case "gender":
-            console.log(peopleArr)
-            let gender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars).toLowerCase(); 
-            let findByGender = peopleArr.filter(function(person) {
-                if (person.gender === gender) {
-                    return true;
-                }
-            });
-            return findByGender
-                .map(function(person) {
-                    return `${person.gender}: ${person.firstName} ${person.lastName}\n`;
-            })
+        "What trait would you like to search for?\nEnter 'gender', 'eyeColor', or 'occupation'.", chars).toLowerCase();
+        switch (chooseTrait) {
+            case "gender":
+            let foundByGender = findByGender(peopleArr);
+            return foundByGender;
+            break;
 
-        case "eyeColor":
-            let eyeColor = promptFor("What is the eye color?", chars).toLowerCase();
-            let findByEyeColor = peopleArr.filter(function(person) {
-                if (person.eyeColor === eyeColor) {
-                    return true;
-                }
-            });
-            return findByEyeColor.map(function(personObj) {
-                return `eyeColor ${personObj.eyeColor}: ${personObj.firstName} ${personObj.lastName}\n`;
-            })
+            case "eyecolor":
+            let foundByEyeColor = findByEyeColor(peopleArr);
+            return foundByEyeColor;
+            break;
 
-        case "occupation":
-            let occupation = promptFor("What is the occupation?", chars).toLowerCase();
-            let findByOccupation = peopleArr.filter(function(person) {
-                if (person.occupation === occupation) {
-                    return true;
-                }
-            });
-            return findByOccupation.map(function(personObj) {
-                return `Occupation ${personObj.occupation}: ${personObj.firstName} ${personObj.lastName}\n`;
-            })
+            case "occupation":
+            let foundByOccupation = findByOccupation(peopleArr);
+            return foundByOccupation;
+            break;
+            default:
+                return singleTraitSearch(peopleArr);
+            }
+        }
 
-        default:
-            return singleTraitSearch(peopleArr);
+function findByGender(peopleArr){
+    let gender = promptFor("What gender are you searching for? \nEnter 'male' or 'female'.", chars).toLowerCase(); 
+    let findByGender = peopleArr.filter(function(person) {
+        if (person.gender === gender) {
+            return true;
+        }
+    });
+    return findByGender
+    .map(function(person) {
+        return `${person.gender}: ${person.firstName} ${person.lastName}\n`;
+        })
+}
+
+function findByEyeColor(peopleArr){
+    let eyeColor = promptFor("What is the eye color?", chars).toLowerCase();
+    let findByEyeColor = peopleArr.filter(function(person) {
+        if (person.eyeColor === eyeColor) {
+            return true;
+        }
+    });
+    return findByEyeColor
+    .map(function(personObj) {
+        return `eyeColor ${personObj.eyeColor}: ${personObj.firstName} ${personObj.lastName}\n`;
+    })
+}
+
+function findByOccupation(peopleArr){
+    let occupation = promptFor("What is the occupation?", chars).toLowerCase();
+    let findByOccupation = peopleArr.filter(function(person) {
+        if (person.occupation === occupation) {
+            return true;
+        }
+    });
+    return findByOccupation
+    .map(function(personObj) {
+        return `Occupation ${personObj.occupation}: ${personObj.firstName} ${personObj.lastName}\n`;
+    })
+}
+
+function multipleTraitSearch(peopleArr){
+    let foundPeople = findByMultiTraits(peopleArr);
+}
+function chooseTrait(){
+    let chosenTraits = prompt(
+        "What traits are you searching with?\nEnter gender, eyeColor, and/or occupation separated by commas.").toLowerCase();
+    let traitSelection = chosenTraits.split(", ");
+    return traitSelection;
+}
+
+function traitFilter(){
+    let filteredTrait = chooseTrait()
+    if (filteredTrait.includes('gender')){
+        let genderFilter = prompt("What is the gender?").toLowerCase();
+        return genderFilter;
+    }
+    if (filteredTrait.includes("eyecolor")){
+        let eyeColorFilter = prompt("What is the eyeColor?").toLowerCase();
+        return eyeColorFilter;
+    }
+    if (filteredTrait.includes("occupation")){
+        let occupationFilter = prompt("What is the occupation?").toLowerCase();
+        return occupationFilter;
     }
 }
 
 
-// const traits = ['gender', 'eyeColor', 'occupation']
-// const traitCategories = traits.filter(trait => trait.match(traitFilter))
+function findByMultiTraits (peopleArr) {
+    let findByTraits = traitFilter()
+    
+    if (findByTraits === 'gender' && findByTraits === 'eyecolor'){
+        let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.eyeColor === eyeColorFilter);
+        return foundByGender.concat(foundByEyeColor);
+
+    } else if (findByTraits === 'gender' && findByTraits === 'occupation'){
+        let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.occupation === occupationFilter);
+        return foundByGender.concat(foundByOccupation);
+
+    } else if (findByTraits === 'eyecolor' && findByTraits === 'occupation'){
+        let foundPeople = peopleArr.filter((person) => person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
+        return foundByEyeColor.concat(foundByOccupation);
+
+    } else if (findByTraits === 'gender' && findByTraits === 'eyecolor' && findByTraits === 'occupation'){
+        let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
+        return foundByGender.concat(foundByEyeColor).concat(foundByOccupation);
+
+    } else {
+        alert("Please try again!");
+        return findByMultTraits(peopleArr);
+    }
+}
 
 
 
-// function multipleTraitSearch() {
-//     //traitSelection
 
-//     //use list of traits to find person
 
-//     //return person
 
+// function findByMultTraits (peopleArr) {
+//     if (traitFilter === 'gender' && traitFilter === 'eyecolor'){
+//         let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.eyeColor === eyeColorFilter);
+//         return foundPeople
+//             .map(function(person) {
+//                 return `Gender: ${person.gender}\nEyeColor: ${person.oeyeColor}\n${person.firstName} ${person.lastName}`
+//             });
+
+//     } else if (traitFilter === 'gender' && traitFilter === 'occupation'){
+//         let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.occupation === occupationFilter);
+//         return foundPeople
+//             .map(function(person) {
+//                 return `Gender: ${person.gender}\nOccupation: ${person.occupation}\n${person.firstName} ${person.lastName}`
+//             });
+
+//     } else if (traitFilter === 'eyecolor' && traitFilter === 'occupation'){
+//         let foundPeople = peopleArr.filter((person) => person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
+//         return foundPeople
+//             .map(function(person) {
+//                 return `EyeColor: ${person.eyeColor}\nOccupation: ${person.occupation}\n${person.firstName} ${person.lastName}`
+//             });
+
+//     } else if (traitFilter === 'gender' && traitFilter === 'eyecolor' && traitFilter === 'occupation'){
+//         let foundPeople = peopleArr.filter((person) => person.gender === genderFilter && person.eyeColor === eyeColorFilter && person.occupation === occupationFilter);
+//         return foundPeople
+//             .map(function(person) {
+//                 return `Gender: ${person.gender}\nEyeColor: ${person.eyeColor}\nOccupation: ${person.occupation}\n${person.firstName} ${person.lastName}`
+//             });
+
+//     } else {
+//         alert("Please try again!");
+//         return findByMultTraits(peopleArr);
+//     }
 // }
 
-// function traitSelection() {
-//     //filter array based on selected traits
 
-//     //create list of traits
+
+
+
+
+
+
+
+// const traits = ['gender', 'eyeColor', 'occupation']
+// const traitCategories = traits.filter(trait => trait.match(traitFilter))
+        
+// function traitSelection (peopleArr, cb){
+//     let traitSelection = promptFor(
+//         "What traits are you searching with?\nEnter 'gender', 'eyeColor', and/or 'occupation'."
+//     ).toLowerCase;
+
+//     const traits = ['gender', 'eyecolor', 'occupation']
+//     const traitCategories = traits.filter(trait => trait.match(traitFilter))
+
+//     return traitSelection;
+// }  
+
+// function multipleTraitSearch(peopleArr) {
+//     //traitSelection
+//     let multTraits = traitSelection()
+
+
+
+        
+//     let traitSelection = []
+//     //use list of traits to find person
+//     let foundByTraits = peopleArr.filter(function(person)){
+//         return(personObj.multTraits.includes(person.))
+//     }
+//     //return people
+
+//     //return selected person into mainMenu function
+
 // }
